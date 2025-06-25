@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <title>Complete jQuery Tutorial</title>
+  <style>
+    /* Base Styles */
+    :root {
+      --primary-color: #3498db;
+      --secondary-color: #2c3e50;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --text-color: #333;
+      --text-light: #7f8c8d;
+      --success-color: #2ecc71;
+      --warning-color: #f39c12;
+      --danger-color: #e74c3c;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background-color: #f5f7fa;
+      min-width: 320px;
+    }
+    
+    /* Header Styles */
+    header {
+      width: 100%;
+      height: 60px;
+      position: fixed;
+      background: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 0 15px;
+      justify-content: space-between;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+    
+    .logo img {
+      width: 30px;
+      height: 30px;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+    }
+    
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background: white;
+      border-radius: 20px;
+      padding: 5px 15px;
+      width: 200px;
+    }
+    
+    .search-bar input {
+      border: none;
+      outline: none;
+      width: 100%;
+      padding: 5px;
+      font-size: 14px;
+    }
+    
+    /* Main Content */
+    .main-content {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+    
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 15px;
+    }
+    
+    /* Card Styles */
+    .card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 1px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    }
+    
+    .card-img {
+      height: 150px;
+      background-color: var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 40px;
+    }
+    
+    .card-content {
+      padding: 15px;
+    }
+    
+    .card h3 {
+      color: var(--secondary-color);
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+    
+    .card-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: var(--text-light);
+    }
+    
+    .card-difficulty {
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    
+    .beginner {
+      background-color: #e8f5e9;
+      color: var(--success-color);
+    }
+    
+    .intermediate {
+      background-color: #e3f2fd;
+      color: var(--primary-color);
+    }
+    
+    .advanced {
+      background-color: #ffebee;
+      color: var(--danger-color);
+    }
+    
+    .card-btn {
+      display: inline-block;
+      padding: 8px 15px;
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      border-radius: 20px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    
+    .card-btn:hover {
+      background-color: var(--secondary-color);
+    }
+    
+    /* Bottom Navigation */
+    .bottom-nav {
+      width: 100%;
+      height: 70px;
+      background: var(--secondary-color);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 10px;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      font-size: 12px;
+      transition: transform 0.3s;
+    }
+    
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+      color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+    
+    /* Topic Detail Page */
+    .topic-detail {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background-color: white;
+      z-index: 200;
+      overflow-y: auto;
+      padding: 70px 20px 100px;
+      display: none;
+    }
+    
+    .topic-detail.active {
+      display: block;
+    }
+    
+    .topic-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background: var(--secondary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 201;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .topic-title {
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    
+    .close-btn {
+      color: white;
+      font-size: 24px;
+      text-decoration: none;
+    }
+    
+    /* Code Examples */
+    .code-container {
+      position: relative;
+      margin: 20px 0;
+    }
+    
+    .copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.3s;
+    }
+    
+    .copy-btn:hover {
+      background: var(--secondary-color);
+    }
+    
+    pre {
+      background: #29292a;
+      padding: 15px;
+      border-radius: 8px;
+      color: #f8f8f2;
+      overflow-x: auto;
+      font-size: 14px;
+      line-height: 1.5;
+      tab-size: 2;
+    }
+    
+    /* Examples and Exercises */
+    .example-container {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin: 15px 0;
+      border-left: 4px solid var(--primary-color);
+    }
+    
+    .example-title {
+      color: var(--secondary-color);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    .try-it-btn {
+      display: inline-block;
+      background: var(--primary-color);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      text-decoration: none;
+      margin-top: 10px;
+      font-size: 14px;
+      transition: background 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    
+    .try-it-btn:hover {
+      background: var(--secondary-color);
+    }
+    
+    .example-output {
+      background: white;
+      padding: 15px;
+      border-radius: 4px;
+      margin-top: 10px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .exercise {
+      background: #e8f4fc;
+      border-left: 4px solid var(--success-color);
+      padding: 15px;
+      margin: 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .exercise-title {
+      color: var(--success-color);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    
+    /* Progress Bar */
+    .progress-container {
+      width: 100%;
+      height: 5px;
+      background: #ecf0f1;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      z-index: 99;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: var(--primary-color);
+      width: 0%;
+      transition: width 0.3s;
+    }
+    
+    /* Settings Menu */
+    .settings-menu {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      padding: 15px;
+      z-index: 200;
+      display: none;
+    }
+    
+    .settings-menu.show {
+      display: block;
+    }
+    
+    .settings-option {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    
+    .settings-option label {
+      margin-left: 10px;
+      font-size: 14px;
+    }
+    
+    /* Rating */
+    .rating {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+    
+    .star {
+      font-size: 24px;
+      color: #ddd;
+      cursor: pointer;
+      transition: color 0.3s;
+      margin: 0 5px;
+    }
+    
+    .star:hover, .star.active {
+      color: #f1c40f;
+    }
+    
+    /* Dark Mode */
+    .dark-mode {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+    }
+    
+    .dark-mode .card {
+      background-color: #34495e;
+      color: var(--light-color);
+      border-color: #2c3e50;
+    }
+    
+    .dark-mode .card h3 {
+      color: var(--light-color);
+    }
+    
+    .dark-mode .card-meta {
+      color: #bdc3c7;
+    }
+    
+    .dark-mode .topic-detail {
+      background-color: var(--dark-color);
+      color: var(--light-color);
+    }
+    
+    .dark-mode pre {
+      background: #1a1a1a;
+    }
+    
+    .dark-mode .example-container {
+      background: #34495e;
+      color: var(--light-color);
+    }
+    
+    .dark-mode .example-output {
+      background: #2c3e50;
+      border-color: #34495e;
+    }
+    
+    .dark-mode .exercise {
+      background: #34495e;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+      
+      .search-bar {
+        width: 150px;
+      }
+      
+      .menu-toggle {
+        display: block;
+      }
+      
+      .logo span {
+        display: none;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr;
+        padding: 10px;
+      }
+      
+      .search-bar {
+        width: 120px;
+      }
+      
+      .card-img {
+        height: 120px;
+      }
+      
+      .bottom-nav {
+        height: 60px;
+      }
+      
+      .nav-item i {
+        font-size: 18px;
+      }
+      
+      .nav-item span {
+        font-size: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <a href="#" class="logo">
+        <img src="https://cdn.iconscout.com/icon/free/png-256/free-jquery-8-1175153.png" alt="jQuery Logo">
+        <span>jQuery Mastery</span>
+      </a>
+      <button class="menu-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="search-bar">
+        <i class="fas fa-search" style="color: #7f8c8d; margin-right: 5px;"></i>
+        <input type="text" placeholder="Search tutorials..." id="searchInput">
+      </div>
+    </div>
+  </header>
+  
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  
+  <div class="main-content">
+    <div class="grid" id="grid"></div>
+  </div>
+  
+  <div class="bottom-nav">
+    <a href="#" class="nav-item active">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-bookmark"></i>
+      <span>Bookmarks</span>
+    </a>
+    <a href="#" class="nav-item">
+      <i class="fas fa-history"></i>
+      <span>History</span>
+    </a>
+    <a href="#" class="nav-item" id="settingsBtn">
+      <i class="fas fa-cog"></i>
+      <span>Settings</span>
+    </a>
+  </div>
+  
+  <div class="settings-menu" id="settingsMenu">
+    <div class="settings-option">
+      <input type="checkbox" id="darkModeToggle">
+      <label for="darkModeToggle">Dark Mode</label>
+    </div>
+    <div class="settings-option">
+      <input type="checkbox" id="fontSizeToggle">
+      <label for="fontSizeToggle">Large Text</label>
+    </div>
+    <div class="settings-option">
+      <span>Rate this app:</span>
+      <div class="rating">
+        <i class="fas fa-star star"></i>
+        <i class="fas fa-star star"></i>
+        <i class="fas fa-star star"></i>
+        <i class="fas fa-star star"></i>
+        <i class="fas fa-star star"></i>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Comprehensive jQuery Topics
+    const Topics = [
+      {
+        id: "intro",
+        title: "jQuery Introduction",
+        category: "Fundamentals",
+        difficulty: "beginner",
+        duration: "10 min",
+        icon: "fa-code",
+        text: `<h2>What is jQuery?</h2>
+        <p>jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.</p>
+        
+        <h3>Why Use jQuery?</h3>
+        <ul>
+          <li>Simplifies HTML document traversing</li>
+          <li>Simplifies event handling</li>
+          <li>Provides simple AJAX interactions</li>
+          <li>Offers cross-browser compatibility</li>
+          <li>Large ecosystem of plugins</li>
+        </ul>
+        
+        <div class="code-container">
+          <button class="copy-btn">Copy</button>
+          <pre><code>// Basic jQuery syntax
+$(document).ready(function(){
+  // jQuery code here
+});</code></pre>
+        </div>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Document Ready</div>
+          <p>This code runs when the DOM is fully loaded:</p>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>$(document).ready(function(){
+  alert("DOM is ready!");
+});</code></pre>
+          </div>
+        </div>`
+      },
+      {
+        id: "selectors",
+        title: "jQuery Selectors",
+        category: "Fundamentals",
+        difficulty: "beginner",
+        duration: "15 min",
+        icon: "fa-mouse-pointer",
+        text: `<h2>jQuery Selectors</h2>
+        <p>jQuery selectors allow you to select and manipulate HTML elements. They are based on CSS selectors with some jQuery-specific additions.</p>
+        
+        <h3>Common Selectors:</h3>
+        <table class="selector-table">
+          <tr>
+            <th>Selector</th>
+            <th>Example</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td>Element</td>
+            <td>$("p")</td>
+            <td>Selects all &lt;p&gt; elements</td>
+          </tr>
+          <tr>
+            <td>ID</td>
+            <td>$("#myId")</td>
+            <td>Selects element with id="myId"</td>
+          </tr>
+          <tr>
+            <td>Class</td>
+            <td>$(".myClass")</td>
+            <td>Selects elements with class="myClass"</td>
+          </tr>
+          <tr>
+            <td>Attribute</td>
+            <td>$("[href]")</td>
+            <td>Selects elements with href attribute</td>
+          </tr>
+        </table>
+        
+        <div class="exercise">
+          <div class="exercise-title">Exercise: Select Elements</div>
+          <p>Select all elements with class "highlight" and change their color to red:</p>
+          <div class="example-output">
+            <div class="highlight">Element 1</div>
+            <div>Element 2</div>
+            <div class="highlight">Element 3</div>
+            <button id="selectExerciseBtn" class="try-it-btn">Run Solution</button>
+          </div>
+        </div>`
+      },
+      {
+        id: "events",
+        title: "jQuery Events",
+        category: "Fundamentals",
+        difficulty: "beginner",
+        duration: "20 min",
+        icon: "fa-bolt",
+        text: `<h2>jQuery Event Methods</h2>
+        <p>jQuery provides simple methods for attaching event handlers to elements.</p>
+        
+        <h3>Common Event Methods:</h3>
+        <ul>
+          <li><strong>click()</strong> - Triggered when element is clicked</li>
+          <li><strong>dblclick()</strong> - Triggered on double click</li>
+          <li><strong>mouseenter()</strong> - Triggered when mouse enters element</li>
+          <li><strong>mouseleave()</strong> - Triggered when mouse leaves element</li>
+          <li><strong>keypress()</strong> - Triggered when key is pressed</li>
+          <li><strong>submit()</strong> - Triggered when form is submitted</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Click Event</div>
+          <p>Click the button to see the event in action:</p>
+          <div class="example-output" id="eventExample">
+            <button id="demoBtn" class="try-it-btn">Click Me</button>
+            <p id="eventMessage" style="margin-top:10px;"></p>
+          </div>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>$("#demoBtn").click(function(){
+  $("#eventMessage").text("Button was clicked!");
+});</code></pre>
+          </div>
+        </div>`
+      },
+      {
+        id: "effects",
+        title: "jQuery Effects",
+        category: "UI",
+        difficulty: "intermediate",
+        duration: "25 min",
+        icon: "fa-magic",
+        text: `<h2>jQuery Effects</h2>
+        <p>jQuery makes it easy to add effects to your web pages.</p>
+        
+        <h3>Common Effects:</h3>
+        <ul>
+          <li><strong>hide() / show()</strong> - Hide or show elements</li>
+          <li><strong>toggle()</strong> - Toggle between hide/show</li>
+          <li><strong>fadeIn() / fadeOut()</strong> - Fade elements in/out</li>
+          <li><strong>slideDown() / slideUp()</strong> - Slide elements up/down</li>
+          <li><strong>animate()</strong> - Create custom animations</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Animation Effects</div>
+          <p>Try these different effects:</p>
+          <div class="example-output" id="effectsExample">
+            <div id="animatedBox" style="width:100px;height:100px;background:#3498db;margin:10px 0;"></div>
+            <button id="hideBtn" class="try-it-btn">Hide</button>
+            <button id="showBtn" class="try-it-btn">Show</button>
+            <button id="animateBtn" class="try-it-btn">Animate</button>
+          </div>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>// Hide/show examples
+$("#hideBtn").click(function(){
+  $("#animatedBox").hide("slow");
+});
+
+$("#showBtn").click(function(){
+  $("#animatedBox").show("fast");
+});
+
+// Custom animation
+$("#animateBtn").click(function(){
+  $("#animatedBox").animate({
+    left: '250px',
+    opacity: '0.5',
+    height: '150px',
+    width: '150px'
+  }, 1000);
+});</code></pre>
+          </div>
+        </div>`
+      },
+      {
+        id: "dom",
+        title: "DOM Manipulation",
+        category: "Fundamentals",
+        difficulty: "intermediate",
+        duration: "30 min",
+        icon: "fa-code-branch",
+        text: `<h2>DOM Manipulation</h2>
+        <p>jQuery provides powerful methods for manipulating the DOM.</p>
+        
+        <h3>Common Methods:</h3>
+        <ul>
+          <li><strong>text() / html()</strong> - Get or set text/HTML content</li>
+          <li><strong>val()</strong> - Get or set form field values</li>
+          <li><strong>attr() / removeAttr()</strong> - Get/set attributes</li>
+          <li><strong>addClass() / removeClass()</strong> - Add/remove classes</li>
+          <li><strong>append() / prepend()</strong> - Insert content</li>
+          <li><strong>remove() / empty()</strong> - Remove elements/content</li>
+        </ul>
+        
+        <div class="exercise">
+          <div class="exercise-title">Exercise: DOM Manipulation</div>
+          <p>Create a list by adding items from the input field:</p>
+          <div class="example-output">
+            <input type="text" id="listItemInput" placeholder="Enter item" style="padding:8px;width:100%;margin:5px 0;">
+            <button id="addItemBtn" class="try-it-btn">Add Item</button>
+            <ul id="itemList" style="margin-top:10px;"></ul>
+          </div>
+        </div>`
+      },
+      {
+        id: "ajax",
+        title: "jQuery AJAX",
+        category: "Advanced",
+        difficulty: "advanced",
+        duration: "35 min",
+        icon: "fa-exchange-alt",
+        text: `<h2>jQuery AJAX</h2>
+        <p>jQuery provides several methods for AJAX functionality, making it easy to exchange data with a server.</p>
+        
+        <h3>AJAX Methods:</h3>
+        <ul>
+          <li><strong>$.ajax()</strong> - Performs an asynchronous HTTP request</li>
+          <li><strong>$.get()</strong> - Loads data from server using HTTP GET</li>
+          <li><strong>$.post()</strong> - Loads data from server using HTTP POST</li>
+          <li><strong>$.getJSON()</strong> - Loads JSON-encoded data</li>
+          <li><strong>load()</strong> - Loads data and puts into an element</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Load External Data</div>
+          <p>Click to load data from a JSON placeholder API:</p>
+          <div class="example-output">
+            <button id="loadDataBtn" class="try-it-btn">Load Data</button>
+            <div id="apiData" style="margin-top:10px;"></div>
+          </div>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>$("#loadDataBtn").click(function(){
+  $.get("https://jsonplaceholder.typicode.com/posts/1", function(data){
+    $("#apiData").html("&lt;h3&gt;" + data.title + "&lt;/h3&gt;&lt;p&gt;" + data.body + "&lt;/p&gt;");
+  });
+});</code></pre>
+          </div>
+        </div>`
+      },
+      {
+        id: "traversing",
+        title: "DOM Traversing",
+        category: "Fundamentals",
+        difficulty: "intermediate",
+        duration: "25 min",
+        icon: "fa-project-diagram",
+        text: `<h2>DOM Traversing</h2>
+        <p>jQuery traversing allows you to move through the DOM tree to find specific elements relative to other elements.</p>
+        
+        <h3>Traversing Methods:</h3>
+        <ul>
+          <li><strong>parent()</strong> - Get the direct parent element</li>
+          <li><strong>parents()</strong> - Get all ancestor elements</li>
+          <li><strong>children()</strong> - Get all direct children</li>
+          <li><strong>find()</strong> - Get descendants by selector</li>
+          <li><strong>siblings()</strong> - Get all sibling elements</li>
+          <li><strong>next() / prev()</strong> - Get next/previous sibling</li>
+          <li><strong>first() / last()</strong> - Filter to first/last element</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Highlighting Parent Elements</div>
+          <p>Click the button to highlight the parent of each span:</p>
+          <div class="example-output" id="traverseExample">
+            <div style="padding:10px;margin:5px;">
+              <span>Item 1</span>
+            </div>
+            <div style="padding:10px;margin:5px;">
+              <span>Item 2</span>
+            </div>
+          </div>
+          <button id="highlightParentsBtn" class="try-it-btn">Highlight Parents</button>
+        </div>`
+      },
+      {
+        id: "ui",
+        title: "jQuery UI",
+        category: "UI",
+        difficulty: "advanced",
+        duration: "40 min",
+        icon: "fa-paint-brush",
+        text: `<h2>jQuery UI</h2>
+        <p>jQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of jQuery.</p>
+        
+        <h3>jQuery UI Features:</h3>
+        <ul>
+          <li><strong>Interactions</strong>: Draggable, Droppable, Resizable, Selectable, Sortable</li>
+          <li><strong>Widgets</strong>: Accordion, Autocomplete, Datepicker, Dialog, Slider, Tabs</li>
+          <li><strong>Effects</strong>: Color animations, Class transitions, Easing</li>
+          <li><strong>Utilities</strong>: Position utility, Widget factory</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Datepicker Widget</div>
+          <p>Click the input to show a datepicker (requires jQuery UI):</p>
+          <div class="example-output">
+            <input type="text" id="datepickerInput" placeholder="Select a date" style="padding:8px;width:100%;">
+          </div>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>// Requires jQuery UI
+$("#datepickerInput").datepicker();</code></pre>
+          </div>
+        </div>`
+      },
+      {
+        id: "plugins",
+        title: "jQuery Plugins",
+        category: "Advanced",
+        difficulty: "advanced",
+        duration: "45 min",
+        icon: "fa-puzzle-piece",
+        text: `<h2>jQuery Plugins</h2>
+        <p>jQuery's plugin architecture allows you to extend its functionality with custom methods.</p>
+        
+        <h3>Creating a Plugin:</h3>
+        <div class="code-container">
+          <button class="copy-btn">Copy</button>
+          <pre><code>(function($){
+  $.fn.greenify = function(options) {
+    // Default settings
+    var settings = $.extend({
+      color: "#00ff00",
+      backgroundColor: "white"
+    }, options);
+    
+    // Apply to each element
+    return this.each(function(){
+      $(this).css({
+        color: settings.color,
+        backgroundColor: settings.backgroundColor
+      });
+    });
+  };
+}(jQuery));
+
+// Usage
+$("p").greenify({
+  color: "green",
+  backgroundColor: "#f0f0f0"
+});</code></pre>
+        </div>
+        
+        <div class="exercise">
+          <div class="exercise-title">Exercise: Create a Simple Plugin</div>
+          <p>Create a plugin that adds a red border to elements:</p>
+          <div class="example-output">
+            <div id="pluginTarget" style="padding:20px;margin:10px 0;">This div will get a red border</div>
+            <button id="runPluginBtn" class="try-it-btn">Run Plugin</button>
+          </div>
+        </div>`
+      },
+      {
+        id: "best-practices",
+        title: "Best Practices",
+        category: "Advanced",
+        difficulty: "advanced",
+        duration: "30 min",
+        icon: "fa-check-circle",
+        text: `<h2>jQuery Best Practices</h2>
+        <p>Follow these practices to write efficient jQuery code.</p>
+        
+        <h3>Performance Tips:</h3>
+        <ul>
+          <li><strong>Cache selectors</strong> - Store repeated selections in variables</li>
+          <li><strong>Use IDs when possible</strong> - ID selectors are fastest</li>
+          <li><strong>Chain methods</strong> - Reduce DOM traversal</li>
+          <li><strong>Delegate events</strong> - Use on() for dynamic content</li>
+          <li><strong>Minimize DOM manipulation</strong> - Batch changes when possible</li>
+          <li><strong>Use latest version</strong> - jQuery is constantly improving</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: Optimized Code</div>
+          <p>Compare these two approaches:</p>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>// Inefficient
+for(var i=0; i<100; i++) {
+  $("#list").append("&lt;li&gt;Item " + i + "&lt;/li&gt;");
+}
+
+// Optimized
+var items = [];
+for(var i=0; i<100; i++) {
+  items.push("&lt;li&gt;Item " + i + "&lt;/li&gt;");
+}
+$("#list").append(items.join(""));</code></pre>
+          </div>
+        </div>`
+      },
+      {
+        id: "modern-jquery",
+        title: "Modern jQuery",
+        category: "Advanced",
+        difficulty: "advanced",
+        duration: "35 min",
+        icon: "fa-rocket",
+        text: `<h2>Modern jQuery Usage</h2>
+        <p>jQuery remains relevant even in modern web development when used appropriately.</p>
+        
+        <h3>Modern Practices:</h3>
+        <ul>
+          <li><strong>Use with modern frameworks</strong> - jQuery can complement React/Vue/Angular for DOM manipulation</li>
+          <li><strong>ES6+ integration</strong> - Use jQuery with modern JavaScript features</li>
+          <li><strong>Progressive enhancement</strong> - Use jQuery to enhance rather than build entire apps</li>
+          <li><strong>Module bundlers</strong> - Import jQuery using Webpack/Rollup</li>
+          <li><strong>jQuery slim</strong> - Use the slim build when AJAX/effects aren't needed</li>
+        </ul>
+        
+        <div class="example-container">
+          <div class="example-title">Example: jQuery with ES6</div>
+          <div class="code-container">
+            <button class="copy-btn">Copy</button>
+            <pre><code>// Using jQuery with ES6 features
+const loadData = async (url) => {
+  try {
+    const response = await $.get(url);
+    $("#result").html(JSON.stringify(response));
+  } catch (error) {
+    console.error("Error:", error);
+  }
+};
+
+// Arrow functions with jQuery
+$(".btn").on("click", (e) => {
+  const target = $(e.target);
+  target.toggleClass("active");
+});</code></pre>
+          </div>
+        </div>`
+      }
+    ];
+
+    // Initialize the app
+    $(document).ready(function() {
+      // Render topics
+      renderTopics(Topics);
+      
+      // Copy button functionality
+      $(document).on('click', '.copy-btn', function() {
+        const code = $(this).siblings('pre').text();
+        navigator.clipboard.writeText(code);
+        $(this).text('Copied!');
+        setTimeout(() => $(this).text('Copy'), 2000);
+      });
+      
+      // Search functionality
+      $('#searchInput').on('input', function() {
+        const searchTerm = $(this).val().toLowerCase();
+        const filteredTopics = Topics.filter(topic => 
+          topic.title.toLowerCase().includes(searchTerm) || 
+          topic.category.toLowerCase().includes(searchTerm) ||
+          topic.text.toLowerCase().includes(searchTerm)
+        );
+        renderTopics(filteredTopics);
+      });
+      
+      // Settings toggle
+      $('#settingsBtn').click(function(e) {
+        e.preventDefault();
+        $('#settingsMenu').toggleClass('show');
+      });
+      
+      // Dark mode toggle
+      $('#darkModeToggle').change(function() {
+        $('body').toggleClass('dark-mode');
+        localStorage.setItem('darkMode', $(this).is(':checked'));
+      });
+      
+      // Font size toggle
+      $('#fontSizeToggle').change(function() {
+        $('body').toggleClass('large-text');
+        localStorage.setItem('largeText', $(this).is(':checked'));
+      });
+      
+      // Star rating
+      $('.star').click(function() {
+        const index = $(this).index();
+        $('.star').removeClass('active');
+        $('.star').each(function(i) {
+          if (i <= index) {
+            $(this).addClass('active');
+          }
+        });
+        localStorage.setItem('appRating', index + 1);
+      });
+      
+      // Load saved settings
+      if (localStorage.getItem('darkMode') === 'true') {
+        $('#darkModeToggle').prop('checked', true).trigger('change');
+      }
+      
+      if (localStorage.getItem('largeText') === 'true') {
+        $('#fontSizeToggle').prop('checked', true).trigger('change');
+      }
+      
+      const savedRating = localStorage.getItem('appRating');
+      if (savedRating) {
+        $('.star').each(function(i) {
+          if (i < savedRating) {
+            $(this).addClass('active');
+          }
+        });
+      }
+      
+      // Progress bar on scroll
+      $(window).scroll(function() {
+        const winScroll = $(this).scrollTop();
+        const height = $(document).height() - $(window).height();
+        const scrolled = (winScroll / height) * 100;
+        $('#progressBar').css('width', scrolled + '%');
+      });
+      
+      // Example interactivity
+      $(document).on('click', '#demoBtn', function() {
+        $("#eventMessage").text("Button was clicked!");
+      });
+      
+      $(document).on('click', '#hideBtn', function() {
+        $("#animatedBox").hide("slow");
+      });
+      
+      $(document).on('click', '#showBtn', function() {
+        $("#animatedBox").show("fast");
+      });
+      
+      $(document).on('click', '#animateBtn', function() {
+        $("#animatedBox").animate({
+          left: '250px',
+          opacity: '0.5',
+          height: '150px',
+          width: '150px'
+        }, 1000);
+      });
+      
+      $(document).on('click', '#addItemBtn', function() {
+        const itemText = $("#listItemInput").val();
+        if (itemText) {
+          $("#itemList").append(`<li>${itemText}</li>`);
+          $("#listItemInput").val("");
+        }
+      });
+      
+      $(document).on('click', '#loadDataBtn', function() {
+        $.get("https://jsonplaceholder.typicode.com/posts/1", function(data) {
+          $("#apiData").html(`<h3>${data.title}</h3><p>${data.body}</p>`);
+        });
+      });
+      
+      $(document).on('click', '#highlightParentsBtn', function() {
+        $("#traverseExample span").parent().css("background", "#fff9c4");
+      });
+      
+      $(document).on('click', '#selectExerciseBtn', function() {
+        $(".highlight").css("color", "red");
+      });
+      
+      $(document).on('click', '#runPluginBtn', function() {
+        // Simple plugin implementation
+        $.fn.redBorder = function() {
+          return this.css("border", "2px solid red");
+        };
+        $("#pluginTarget").redBorder();
+      });
+      
+      // Card click handler
+      $(document).on('click', '.card', function() {
+        const topicId = $(this).data('id');
+        showTopicDetail(topicId);
+      });
+      
+      // Close topic detail
+      $(document).on('click', '.close-btn', function(e) {
+        e.preventDefault();
+        $('.topic-detail').removeClass('active');
+      });
+    });
+    
+    // Render topics to the grid
+    function renderTopics(topics) {
+      const grid = $('#grid');
+      grid.empty();
+      
+      if (topics.length === 0) {
+        grid.html('<p style="width:100%; text-align:center; padding:40px;">No topics found matching your search.</p>');
+        return;
+      }
+      
+      topics.forEach((topic, index) => {
+        grid.append(`
+          <div class="card" data-id="${index}">
+            <div class="card-img">
+              <i class="fas ${topic.icon}"></i>
+            </div>
+            <div class="card-content">
+              <h3>${topic.title}</h3>
+              <div class="card-meta">
+                <span>${topic.category}</span>
+                <span class="card-difficulty ${topic.difficulty}">${topic.difficulty}</span>
+              </div>
+              <a href="#" class="card-btn">Learn Now</a>
+            </div>
+          </div>
+        `);
+      });
+    }
+    
+    // Show topic detail
+    function showTopicDetail(index) {
+      const topic = Topics[index];
+      const detailView = $(`
+        <div class="topic-detail active">
+          <div class="topic-header">
+            <div class="topic-title">${topic.title}</div>
+            <a href="#" class="close-btn"><i class="fas fa-times"></i></a>
+          </div>
+          <div class="topic-content">
+            ${topic.text}
+            <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Topics</a>
+          </div>
+        </div>
+      `);
+      
+      $('body').append(detailView);
+      
+      // Add copy buttons to any new code blocks
+      detailView.find('pre').each(function() {
+        if (!$(this).siblings('.copy-btn').length) {
+          $(this).before('<button class="copy-btn">Copy</button>');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
